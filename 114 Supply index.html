@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>114 Supply — Youth Clothing</title>
+<meta name="description" content="114 Supply — youth-first streetwear. Clean lines, limited drops.">
+<style>
+/* ============================
+   114 Supply — Nominal‑inspired theme
+   Sand/Black + Gold accents
+   Single file with cart + checkout
+   ============================ */
+:root{
+  --bg:#ffffff;
+  --surface:#f7f7f7;
+  --text:#111111;
+  --muted:#555555;
+  --line:#e0e0e0;
+  --accent:#d4af37;  /* gold */
+  --accent2:#e9c976; /* sand gold */
+  --chip:#f0f0f0;
+  --radius:14px;
+  --shadow:0 10px 35px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background:
+    radial-gradient(800px 420px at 85% -15%, rgba(233,201,118,.08), transparent 60%),
+    radial-gradient(600px 320px at 10% -10%, rgba(212,175,55,.07), transparent 50%),
+    var(--bg);
+  line-height:1.55;
+}
+.container{max-width:1140px;margin-inline:auto;padding:0 20px}
+
+/* Announcement */
+.announce{background:#0d0c0a;border-bottom:1px solid var(--line);text-align:center;font-weight:600;padding:.6rem .8rem;color:var(--muted)}
+.announce b{color:var(--text)}
+
+/* Header/Nav */
+.site-header{position:sticky;top:0;z-index:60;background:rgba(10,10,10,.88);backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid transparent;transition:border-color .25s ease, box-shadow .25s ease}
+.site-header[data-elevated="true"]{border-bottom-color:var(--line); box-shadow:0 8px 16px rgba(0,0,0,.25)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;min-height:70px}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--text);font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.brand svg{width:34px;height:34px}
+.nav-toggle{display:none;background:none;border:0;padding:8px;cursor:pointer}
+.nav-toggle .bar{display:block;width:24px;height:2px;background:var(--text);margin:5px 0;border-radius:4px}
+.nav-list{display:flex;gap:22px;list-style:none;margin:0;padding:0;align-items:center}
+.nav-list a{color:var(--text);text-decoration:none;font-weight:600;opacity:.9}
+.nav-list a:hover{opacity:1}
+.pill{padding:.55rem .95rem;border-radius:999px;border:1px solid var(--line);background:#12110e}
+.pill--accent{border-color:#2a2415;background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#0b0b0b;font-weight:800}
+.cart-button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:.5rem .9rem;background:#14130f;cursor:pointer}
+.cart-count{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0b0b;font-weight:900;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-size:.8rem}
+
+/* Hero */
+.hero{padding:42px 0 18px; position:relative}
+.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center}
+.hero h1{font-weight:900; letter-spacing:.3px; font-size:clamp(2.1rem, 2.4vw + 1.1rem, 3.6rem); margin:.2rem 0 .8rem}
+.accent{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted); max-width:54ch;font-size:1.05rem}
+.cta-row{display:flex;gap:12px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 18px;border-radius:12px;text-decoration:none;border:1px solid var(--line);cursor:pointer;font-weight:700}
+.btn--primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#0c0c0c; border-color:transparent}
+.btn--ghost{background:#14130f;color:var(--text)}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 0}
+.badge{display:flex;align-items:center;gap:8px;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-weight:600}
+
+/* Hero media */
+.hero-media{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.hero-media img{display:block;width:100%;height:auto;object-fit:cover}
+
+/* Section heads */
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:40px 0 16px}
+.section-head h2{letter-spacing:.5px;font-size:1.55rem;margin:0}
+.section-head .sub{color:var(--muted);margin:0}
+
+/* Product grid */
+.grid{padding:10px 0 10px}
+.product-grid{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:0;padding:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+.card:hover{transform:translateY(-3px);border-color:#2a2415;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+.card .thumb{display:block;width:100%;height:260px;background:#0f0e0c;border-bottom:1px solid var(--line);overflow:hidden}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.card-info{padding:12px 14px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+.card-info h3{margin:0;font-size:1rem}
+.price{color:var(--muted);font-weight:700}
+.kicker{font-size:.78rem;color:var(--muted)}
+.add-row{display:flex;gap:10px;align-items:center;margin-top:10px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#14130f}
+.qty button{all:unset;cursor:pointer;padding:.3rem .6rem}
+.qty input{all:unset;width:34px;text-align:center;padding:.3rem .2rem}
+
+/* Split about */
+.split{padding:56px 0}
+.split-inner{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+.split .media{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.split .media img{display:block;width:100%;height:auto;object-fit:cover}
+.split p{color:var(--muted)}
+.bullets{margin:16px 0 22px;padding-left:18px}
+.bullets li{margin:6px 0}
+
+/* Lookbook */
+.lookbook{padding:48px 0}
+.lb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.lb-grid .tile{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0f1113}
+.lb-grid img{width:100%;height:220px;display:block;object-fit:cover}
+
+/* Newsletter */
+.newsletter{padding:48px 0}
+.newsletter-inner{display:flex;justify-content:space-between;gap:20px;align-items:center;background:linear-gradient(120deg, rgba(233,201,118,.09), rgba(212,175,55,.09)); padding:22px;border:1px solid var(--line);border-radius:18px}
+.form{display:flex;gap:10px}
+.form input{background:#12110e;border:1px solid var(--line);color:var(--text);padding:12px 14px;border-radius:12px;min-width:260px}
+.form button{white-space:nowrap}
+
+/* Contact */
+.contact{padding:10px 0 60px}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.contact-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.contact-card h3{margin-top:0}
+.link{color:var(--accent);text-decoration:none}
+.link:hover{text-decoration:underline}
+
+/* Checkout Drawer / Pages */
+.drawer{
+  position:fixed; inset:0 0 0 auto; width:min(420px, 100%); transform:translateX(110%);
+  transition:transform .25s ease; background:#0e0d0a; border-left:1px solid var(--line); z-index:80;
+  display:flex; flex-direction:column; max-height:100vh;
+}
+.drawer.open{transform:translateX(0)}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:16px 16px;border-bottom:1px solid var(--line)}
+.drawer h3{margin:0}
+.drawer .items{overflow:auto; padding:12px 12px; flex:1; display:flex; flex-direction:column; gap:12px}
+.cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;background:#12110e}
+.cart-item .thumb{width:64px;height:64px;background:#0f0e0c;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.cart-item .meta{font-size:.92rem}
+.cart-item .meta .muted{color:var(--muted);font-size:.85rem}
+.cart-item .actions{display:flex;flex-direction:column;align-items:end;gap:8px}
+.cart-item .qty{transform:scale(.9)}
+.cart-empty{color:var(--muted); text-align:center; padding:30px}
+.drawer .summary{border-top:1px solid var(--line); padding:14px 16px; display:grid; gap:10px}
+.row{display:flex; align-items:center; justify-content:space-between}
+.total .label{font-weight:800}
+.checkout-btn{width:100%;}
+
+.page{display:none}
+.page.active{display:block}
+.checkout{padding:26px 0 60px}
+.checkout .wrap{max-width:880px;margin:0 auto;border:1px solid var(--line);border-radius:16px;background:#0e0d0a;overflow:hidden}
+.checkout .head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.stepper{display:flex;gap:10px;align-items:center;font-size:.9rem}
+.stepper .dot{width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#15130f;border:1px solid var(--line)}
+.stepper .dot.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0b0b;border-color:transparent;font-weight:900}
+.checkout .body{display:grid;grid-template-columns:1fr 340px; gap:0}
+.checkout .main{padding:18px;border-right:1px solid var(--line)}
+.checkout .aside{padding:18px}
+.field{display:grid;gap:6px;margin-bottom:12px}
+.field label{font-weight:600}
+.input, select, textarea{background:#12110e;border:1px solid var(--line);color:var(--text);padding:12px 12px;border-radius:12px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.divider{border-top:1px solid var(--line);margin:14px 0}
+.note{color:var(--muted);font-size:.92rem}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--line); padding:22px 0 32px}
+.footer-grid{display:grid;grid-template-columns:1fr auto 1fr; align-items:center; gap:12px}
+.footer-brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.footer-nav{display:flex;gap:16px}
+.footer-nav a{color:var(--text); text-decoration:none; opacity:.85}
+.footer-nav a:hover{opacity:1}
+.footer-meta{display:flex;gap:14px;justify-content:flex-end;align-items:center;color:var(--muted)}
+.muted{color:var(--muted); text-decoration:none}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#12110e;border:1px solid var(--line);border-radius:999px;padding:10px 14px;opacity:0;transition:.25s;z-index:200}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Responsive */
+@media (max-width: 980px){
+  .hero-inner{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:repeat(2,1fr)}
+  .split-inner{grid-template-columns:1fr}
+  .lb-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr; text-align:center}
+  .footer-meta{justify-content:center; flex-wrap:wrap}
+  .checkout .body{grid-template-columns:1fr}
+  .checkout .main{border-right:none;border-bottom:1px solid var(--line)}
+}
+@media (max-width: 720px){
+  .nav-toggle{display:block}
+  .nav-list{
+    position:absolute; right:20px; top:70px; background:var(--surface);
+    border:1px solid var(--line); border-radius:14px; padding:12px;
+    flex-direction:column; gap:12px; display:none; min-width:200px; box-shadow:var(--shadow)
+  }
+  .nav-list.open{display:flex}
+  .form{flex-direction:column; align-items:stretch}
+  .contact-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+  <!-- Announcement -->
+  <div class="announce"><b>114 Supply</b> — Free U.S. shipping over $75 · Easy returns</div>
+
+  <!-- Header -->
+  <header class="site-header" data-elevated="false" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="114 Supply home">
+        <svg viewBox="0 0 96 96" aria-hidden="true">
+          <rect width="96" height="96" rx="18" fill="#0c0c0c"/>
+          <rect x="6" y="6" width="84" height="84" rx="14" fill="none" stroke="#1d1b17" stroke-width="2"/>
+          <g fill="#d4af37" font-weight="900" font-size="36" font-family="Inter, Arial" text-anchor="middle">
+            <text x="48" y="58">114</text>
+          </g>
+        </svg>
+        <span>114&nbsp;Supply</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Toggle menu">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <ul class="nav-list">
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#lookbook">Lookbook</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#newsletter" class="pill pill--accent">Join</a></li>
+        </ul>
+      </nav>
+
+      <button class="cart-button" id="openCart" aria-haspopup="dialog" aria-controls="cartDrawer" aria-expanded="false">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1>Minimal silhouettes, <span class="accent">bold intention</span>.</h1>
+          <p>Streetwear essentials in sand, black, and gold. Built for everyday movement. Limited drops only.</p>
+          <div class="badges" aria-hidden="true">
+            <div class="badge">Premium Cotton</div>
+            <div class="badge">Ethically Made</div>
+            <div class="badge">30‑Day Returns</div>
+          </div>
+          <div class="cta-row">
+            <a href="#shop" class="btn btn--primary">Shop Drop 01</a>
+            <a href="#lookbook" class="btn btn--ghost">View Lookbook</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="https://source.unsplash.com/1200x900/?streetwear,model,black" alt="Lookbook hero image showing youth streetwear">
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured / Shop -->
+    <section class="grid" id="shop" aria-labelledby="shop-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="shop-heading">Featured</h2>
+          <p class="sub">Everyday pieces in our sand/black palette.</p>
+        </div>
+
+        <ul class="product-grid" role="list" id="productGrid"></ul>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="split" id="about">
+      <div class="container split-inner">
+        <div class="media" aria-hidden="true">
+          <img src="https://source.unsplash.com/1200x900/?fabric,texture,beige" alt="Fabric texture">
+        </div>
+        <div>
+          <h2>What is 114?</h2>
+          <p>Born in West Hills, Los Angeles — 114 Supply blends clean lines with grounded palettes. We design for comfort, movement, and meaning.</p>
+          <ul class="bullets">
+            <li>Small-batch, limited runs</li>
+            <li>Unisex fits XS–XXL</li>
+            <li>Heavyweight cotton & recycled blends</li>
+          </ul>
+          <a href="#newsletter" class="btn btn--primary">Get first access</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lookbook -->
+    <section class="lookbook" id="lookbook" aria-labelledby="lb-heading">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="lb-heading">Lookbook</h2>
+          <p class="sub">Season 01 — “Signal”</p>
+        </div>
+        <div class="lb-grid">
+          <div class="tile"><img src="https://source.unsplash.com/1000x800/?tshirt,streetwear,black" alt="Look 1"></div>
+          <div class="tile"><img src="https://source.unsplash.com/1000x800/?hoodie,streetwear,monochrome" alt="Look 2"></div>
+          <div class="tile"><img src="https://source.unsplash.com/1000x800/?cargo-pants,fashion" alt="Look 3"></div>
+          <div class="tile"><img src="https://source.unsplash.com/1000x800/?cap,streetwear" alt="Look 4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter">
+      <div class="container newsletter-inner">
+        <div>
+          <h2>Join the list</h2>
+          <p class="sub">Early access to drops, restocks, and events. No spam.</p>
+        </div>
+        <form class="form" action="#" method="post" onsubmit="return window.fakeSignup(event)">
+          <label for="email" class="sr-only">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <button class="btn btn--primary" type="submit">Notify me</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2><p class="sub">Wholesale, collabs, press.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Wholesale & Collabs</h3>
+            <p>We partner with select boutiques and creators.</p>
+            <a class="link" href="mailto:hello@114supply.com">hello@114supply.com</a>
+          </div>
+          <div class="contact-card">
+            <h3>Press</h3>
+            <p>Media inquiries & lookbook assets.</p>
+            <a class="link" href="mailto:press@114supply.com">press@114supply.com</a>
+          </div>
+          <div class="contact-card">
+            <h3>Customer Care</h3>
+            <p>Orders, exchanges, sizing.</p>
+            <a class="link" href="mailto:support@114supply.com">support@114supply.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout Page (hidden until used) -->
+    <section class="page checkout" id="checkoutPage" aria-labelledby="checkoutHeading">
+      <div class="container">
+        <div class="wrap">
+          <div class="head">
+            <h2 id="checkoutHeading">Checkout</h2>
+            <div class="stepper">
+              <span class="dot active" data-step="1">1</span> <span>Shipping</span>
+              <span>›</span>
+              <span class="dot" data-step="2">2</span> <span>Payment</span>
+              <span>›</span>
+              <span class="dot" data-step="3">3</span> <span>Confirm</span>
+            </div>
+          </div>
+          <div class="body">
+            <form class="main" id="checkoutForm" onsubmit="return false">
+              <!-- Step 1: Shipping -->
+              <div id="step1">
+                <div class="field"><label>Full name</label><input class="input" name="name" required placeholder="Meerwais Hanan"></div>
+                <div class="field"><label>Email</label><input class="input" type="email" name="email" required placeholder="you@example.com"></div>
+                <div class="field"><label>Phone</label><input class="input" name="phone" placeholder="+1 555 555 5555"></div>
+                <div class="field"><label>Address</label><input class="input" name="address" required placeholder="123 Sunset Blvd"></div>
+                <div class="grid-2">
+                  <div class="field"><label>City</label><input class="input" name="city" required placeholder="Los Angeles"></div>
+                  <div class="field"><label>State</label><input class="input" name="state" required placeholder="CA"></div>
+                </div>
+                <div class="grid-2">
+                  <div class="field"><label>ZIP / Postal</label><input class="input" name="zip" required placeholder="90001" pattern="\\d{4,10}"></div>
+                  <div class="field"><label>Country</label>
+                    <select name="country" class="input" required>
+                      <option value="US">United States</option>
+                      <option value="AE">United Arab Emirates</option>
+                      <option value="TH">Thailand</option>
+                      <option value="AF">Afghanistan</option>
+                      <option value="GB">United Kingdom</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <div class="field">
+                  <label>Shipping method</label>
+                  <select name="shipping" class="input" required>
+                    <option value="standard">Standard (4–6 days) — $6.00</option>
+                    <option value="express">Express (2–3 days) — $14.00</option>
+                    <option value="pickup">Local pickup — FREE</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <button class="btn btn--ghost" type="button" onclick="window.goBackFromCheckout()">← Keep shopping</button>
+                  <button class="btn btn--primary" type="button" onclick="window.goToPayment()">Continue to payment</button>
+                </div>
+              </div>
+
+              <!-- Step 2: Payment (mock) -->
+              <div id="step2" style="display:none">
+                <div class="note">Test mode — this demo doesn’t charge real cards. Choose a method and continue.</div>
+                <div class="field">
+                  <label>Payment method</label>
+                  <select name="paymethod" class="input" required>
+                    <option value="card">Card (Visa/Mastercard)</option>
+                    <option value="cod">Cash on delivery</option>
+                  </select>
+                </div>
+                <div id="cardFields">
+                  <div class="grid-2">
+                    <div class="field"><label>Card number</label><input class="input" inputmode="numeric" placeholder="4242 4242 4242 4242"></div>
+                    <div class="field"><label>Name on card</label><input class="input" placeholder="M Hanan"></div>
+                  </div>
+                  <div class="grid-2">
+                    <div class="field"><label>Expiry</label><input class="input" placeholder="12/30"></div>
+                    <div class="field"><label>CVC</label><input class="input" placeholder="123"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <button class="btn btn--ghost" type="button" onclick="window.backToShipping()">← Back</button>
+                  <button class="btn btn--primary" type="button" onclick="window.placeOrder()">Pay & place order</button>
+                </div>
+              </div>
+
+              <!-- Step 3: Confirmation -->
+              <div id="step3" style="display:none">
+                <h3>Thank you! 🎉</h3>
+                <p>Your order <b id="orderId"></b> is confirmed. A receipt was sent to <b id="orderEmail"></b>.</p>
+                <p class="note">You’ll receive shipping updates as your items leave our warehouse.</p>
+                <div class="row">
+                  <button class="btn btn--primary" type="button" onclick="window.returnHome()">Back to home</button>
+                </div>
+              </div>
+            </form>
+
+            <aside class="aside">
+              <h3>Order summary</h3>
+              <div id="summaryItems"></div>
+              <div class="divider"></div>
+              <div class="row"><span>Subtotal</span><b id="sumSubtotal">$0.00</b></div>
+              <div class="row"><span>Shipping</span><b id="sumShipping">$0.00</b></div>
+              <div class="row"><span>Tax (8.75%)</span><b id="sumTax">$0.00</b></div>
+              <div class="divider"></div>
+              <div class="row total"><span class="label">Total</span><b id="sumTotal">$0.00</b></div>
+              <p class="note">Orders over $75 ship free.</p>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart Drawer -->
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <header>
+      <h3 id="cartTitle">Your cart</h3>
+      <button class="btn" onclick="window.closeCart()">Close</button>
+    </header>
+    <div class="items" id="cartItems">
+      <div class="cart-empty">Your cart is empty.</div>
+    </div>
+    <div class="summary">
+      <div class="row"><span>Subtotal</span><b id="cartSubtotal">$0.00</b></div>
+      <div class="row"><span>Estimated tax</span><b id="cartTax">$0.00</b></div>
+      <div class="row total"><span class="label">Total</span><b id="cartTotal">$0.00</b></div>
+      <button class="btn btn--primary checkout-btn" onclick="window.startCheckout()">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <rect width="32" height="32" rx="6" fill="#0c0c0c"/>
+          <path d="M6 6h20v20H6z" fill="none" stroke="#1d1b17"/>
+          <text x="16" y="21" text-anchor="middle" font-family="Inter, Arial" font-weight="900" font-size="12" fill="#d4af37">114</text>
+        </svg>
+        <span>114&nbsp;Supply</span>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#lookbook">Lookbook</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer-meta">
+        <span>© <span id="year"></span> 114 Supply. All rights reserved.</span>
+        <a href="#" class="muted">Privacy</a>
+        <a href="#" class="muted">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================
+   Store Logic (Cart + Checkout)
+   ============================ */
+(function(){
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const fmt = n => (n||0).toLocaleString(undefined,{style:'currency',currency:'USD'});
+
+  const header = $('.site-header');
+  const toggle = $('.nav-toggle');
+  const navList = $('.nav-list');
+  const yearEl = $('#year');
+  const openCartBtn = $('#openCart');
+  const cartDrawer = $('#cartDrawer');
+  const cartItemsEl = $('#cartItems');
+  const cartCountEl = $('#cartCount');
+  const cartSubtotalEl = $('#cartSubtotal');
+  const cartTaxEl = $('#cartTax');
+  const cartTotalEl = $('#cartTotal');
+  const toast = $('#toast');
+
+  const checkoutPage = $('#checkoutPage');
+  const summaryItems = $('#summaryItems');
+  const sumSubtotal = $('#sumSubtotal');
+  const sumShipping = $('#sumShipping');
+  const sumTax = $('#sumTax');
+  const sumTotal = $('#sumTotal');
+  const stepDots = $$('.stepper .dot');
+  const step1 = $('#step1');
+  const step2 = $('#step2');
+  const step3 = $('#step3');
+  const orderIdEl = $('#orderId');
+  const orderEmailEl = $('#orderEmail');
+  const checkoutForm = $('#checkoutForm');
+
+  // Catalog with real (random) photos
+  const catalog = [
+    {id:'tee-mono', name:'Mono Tee — Sand', price:35, desc:'Heavyweight 220gsm', img:'https://source.unsplash.com/800x600/?tshirt,beige'},
+    {id:'hoodie-signal', name:'Signal Hoodie — Black', price:68, desc:'Brushed fleece', img:'https://source.unsplash.com/800x600/?hoodie,black'},
+    {id:'cargo-transit', name:'Transit Cargo — Olive', price:79, desc:'Technical twill', img:'https://source.unsplash.com/800x600/?cargo-pants,olive'},
+    {id:'cap-echo', name:'Echo Cap — Sand', price:28, desc:'Adjustable strap', img:'https://source.unsplash.com/800x600/?cap,beige'},
+  ];
+
+  // Render products
+  const grid = $('#productGrid');
+  grid.innerHTML = catalog.map((p) => `
+    <li class="card" data-id="${p.id}">
+      <a class="thumb" href="#" aria-label="${p.name}">
+        <img src="${p.img}" alt="${p.name}">
+      </a>
+      <div class="card-info">
+        <div>
+          <h3>${p.name}</h3>
+          <div class="kicker">${p.desc}</div>
+          <div class="add-row">
+            <div class="qty" data-id="${p.id}">
+              <button aria-label="Decrease" onclick="window.changeQty('${p.id}', -1)">−</button>
+              <input id="qty_${p.id}" value="1" inputmode="numeric" />
+              <button aria-label="Increase" onclick="window.changeQty('${p.id}', 1)">+</button>
+            </div>
+            <button class="btn btn--primary" onclick="window.addToCart('${p.id}')">Add · ${fmt(p.price)}</button>
+          </div>
+        </div>
+        <div class="price">${fmt(p.price)}</div>
+      </div>
+    </li>
+  `).join('');
+
+  // State
+  let cart = loadCart();
+
+  function loadCart(){
+    try { return JSON.parse(localStorage.getItem('cart114') || '[]'); }
+    catch(e){ return []; }
+  }
+  function saveCart(){
+    localStorage.setItem('cart114', JSON.stringify(cart));
+  }
+
+  // Simple helpers
+  function findProduct(id){ return catalog.find(p=>p.id===id); }
+  function cartTotals(){
+    const subtotal = cart.reduce((s,i)=> s + i.qty * findProduct(i.id).price, 0);
+    const tax = subtotal * 0.0875;
+    const total = subtotal + tax;
+    return {subtotal, tax, total};
+  }
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 1800);
+  }
+
+  // Quantity field +/- on cards
+  window.changeQty = (id, delta) => {
+    const input = document.getElementById('qty_'+id);
+    let v = parseInt(input.value || '1',10)+delta;
+    if(isNaN(v) || v<1) v=1;
+    if(v>99) v=99;
+    input.value = v;
+  };
+
+  // Add to cart
+  window.addToCart = (id) => {
+    const qtyInput = document.getElementById('qty_'+id);
+    const qty = Math.max(1, Math.min(99, parseInt(qtyInput?.value || '1',10)));
+    const existing = cart.find(i=>i.id===id);
+    if(existing) existing.qty = Math.min(99, existing.qty + qty);
+    else cart.push({id, qty});
+    saveCart();
+    renderCart();
+    showToast('Added to cart ✓');
+    openCart();
+  };
+
+  // Render Cart Drawer
+  function renderCart(){
+    cartCountEl.textContent = cart.reduce((s,i)=>s+i.qty,0);
+    if(cart.length===0){
+      cartItemsEl.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+      cartSubtotalEl.textContent = fmt(0);
+      cartTaxEl.textContent = fmt(0);
+      cartTotalEl.textContent = fmt(0);
+      return;
+    }
+    cartItemsEl.innerHTML = cart.map(item=>{
+      const p = findProduct(item.id);
+      return `
+        <div class="cart-item">
+          <div class="thumb" aria-hidden="true"><img src="${p.img}" alt="" style="width:64px;height:64px;object-fit:cover"></div>
+          <div class="meta">
+            <div><b>${p.name}</b></div>
+            <div class="muted">${p.desc}</div>
+            <div class="muted">${fmt(p.price)}</div>
+          </div>
+          <div class="actions">
+            <div class="qty">
+              <button onclick="window.updateCartQty('${item.id}', -1)">−</button>
+              <input value="${item.qty}" oninput="window.typeQty('${item.id}', this.value)" />
+              <button onclick="window.updateCartQty('${item.id}', 1)">+</button>
+            </div>
+            <button class="btn" onclick="window.removeItem('${item.id}')" title="Remove">Remove</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const {subtotal, tax, total} = cartTotals();
+    cartSubtotalEl.textContent = fmt(subtotal);
+    cartTaxEl.textContent = fmt(tax);
+    cartTotalEl.textContent = fmt(total);
+  }
+  window.updateCartQty = (id, delta) => {
+    const it = cart.find(i=>i.id===id);
+    if(!it) return;
+    it.qty += delta;
+    if(it.qty<1) cart = cart.filter(i=>i.id!==id);
+    if(it.qty>99) it.qty=99;
+    saveCart(); renderCart();
+  };
+  window.typeQty = (id, val) => {
+    const it = cart.find(i=>i.id===id);
+    if(!it) return;
+    let v = parseInt(val||'1',10);
+    if(isNaN(v) || v<1) v=1;
+    if(v>99) v=99;
+    it.qty = v; saveCart(); renderCart();
+  };
+  window.removeItem = (id) => {
+    cart = cart.filter(i=>i.id!==id);
+    saveCart(); renderCart();
+  };
+
+  // Drawer controls
+  function openCart(){ cartDrawer.classList.add('open'); openCartBtn.setAttribute('aria-expanded','true'); }
+  function closeCart(){ cartDrawer.classList.remove('open'); openCartBtn.setAttribute('aria-expanded','false'); }
+  window.closeCart = closeCart;
+  openCartBtn.addEventListener('click', ()=> cartDrawer.classList.toggle('open'));
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCart(); });
+
+  // Checkout start
+  window.startCheckout = () => {
+    if(cart.length===0){ showToast('Your cart is empty'); return; }
+    closeCart();
+    goToCheckout();
+  };
+
+  function goToCheckout(){
+    renderSummary();
+    $$('.page').forEach(p=>p.classList.remove('active'));
+    checkoutPage.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    setStep(1);
+  }
+  function renderSummary(){
+    if(cart.length===0){ summaryItems.innerHTML = '<p class="note">Cart is empty.</p>'; return; }
+    summaryItems.innerHTML = cart.map(item=>{
+      const p = findProduct(item.id);
+      return `<div class="row"><span>${p.name} × ${item.qty}</span><b>${fmt(p.price*item.qty)}</b></div>`;
+    }).join('');
+    const sub = cart.reduce((s,i)=> s + i.qty*findProduct(i.id).price, 0);
+    let ship = 6;
+    if(sub >= 75) ship = 0;
+    sumSubtotal.textContent = fmt(sub);
+    sumShipping.textContent = fmt(ship);
+    const tax = (sub * 0.0875);
+    sumTax.textContent = fmt(tax);
+    sumTotal.textContent = fmt(sub + ship + tax);
+  }
+  function setStep(n){
+    stepDots.forEach(dot=>dot.classList.toggle('active', dot.getAttribute('data-step')==String(n)));
+    step1.style.display = n===1?'block':'none';
+    step2.style.display = n===2?'block':'none';
+    step3.style.display = n===3?'block':'none';
+  }
+  window.goToPayment = ()=>{
+    const req = ['name','email','address','city','state','zip','country','shipping'];
+    for(const r of req){ if(!checkoutForm.elements[r].value){ showToast('Please complete shipping details'); return; } }
+    setStep(2);
+  };
+  window.backToShipping = ()=> setStep(1);
+  window.goBackFromCheckout = ()=>{
+    checkoutPage.classList.remove('active');
+    window.location.hash = '#shop';
+  };
+  window.placeOrder = ()=>{
+    const email = checkoutForm.elements['email'].value;
+    const paymethod = checkoutForm.elements['paymethod'].value;
+    if(!paymethod){ showToast('Choose a payment method'); return; }
+    const id = '114-' + Math.random().toString(36).slice(2,7).toUpperCase();
+    orderIdEl.textContent = id;
+    orderEmailEl.textContent = email;
+    cart = []; saveCart(); renderCart();
+    setStep(3);
+  };
+  window.returnHome = ()=>{
+    checkoutPage.classList.remove('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // Newsletter fake
+  window.fakeSignup = (e)=>{
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    showToast("You're on the list: " + email);
+    e.target.reset();
+    return false;
+  };
+
+  // Header effects
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY || 0;
+    header.dataset.elevated = y > 8;
+  });
+  toggle?.addEventListener('click', () => {
+    const open = navList.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Initial render
+  renderCart();
+  window._cart = cart;
+})();
+</script>
+</body>
+</html>

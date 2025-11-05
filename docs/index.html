@@ -527,12 +527,10 @@ body{
 
   // Catalog with random non-branded photos
   const catalog = [
-    {id:'tee-mono', name:'Mono Tee — Sand', price:35, desc:'Heavyweight 220gsm', img:'https://source.unsplash.com/800x600/?tshirt,beige'},
-    {id:'hoodie-signal', {id:'hoodie-signal', name:'Signal Hoodie — Ice Blue', price:68, desc:'Brushed fleece', img:'images/hoodie-blue.jpg'},
-    {id:'cargo-transit', name:'Transit Cargo — Olive', price:79, desc:'Technical twill', img:'https://source.unsplash.com/800x600/?cargo-pants,olive'},
-    {id:'cap-echo', name:'Echo Cap — Sand', price:28, desc:'Adjustable strap', img:'https://source.unsplash.com/800x600/?cap,beige'}
-  ];
-
+  {id:'hoodie-blue', name:'114 Hoodie — Ice Blue', price:65, desc:'Premium heavyweight hoodie', img:'images/hoodie-blue.jpg'},
+  {id:'designA',     name:'Design A Tee — Sand',   price:35, desc:'Soft cotton tee',           img:'images/designA.jpeg'},
+  {id:'designB',     name:'Design B Tee — Black',  price:35, desc:'Soft cotton tee',           img:'images/designB.jpeg'}
+];
   // Render products
   const grid = $('#productGrid');
   grid.innerHTML = catalog.map((p) => `

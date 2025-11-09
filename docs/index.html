@@ -275,7 +275,35 @@ body{
 .row{display:flex; align-items:center; justify-content:space-between}
 .total .label{font-weight:800}
 .checkout-btn{width:100%}
+  
+  /* Footer Logo */
+.footer-logo {
+  width: 80px;
+  height: auto;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
 
+.footer-logo:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+  @keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-logo {
+  animation: fadeUp 1s ease-out both;
+}
+  
 .page{display:none}
 .page.active{display:block}
 .checkout{padding:26px 0 60px}
@@ -618,6 +646,7 @@ body{
         <a href="#contact">Contact</a>
       </nav>
       <div class="footer-meta">
+        <img src="images/logo-114.jpg" alt="114 Supply Logo" class="footer-logo" />
         <span>© <span id="year"></span> 114 Supply. All rights reserved.</span>
         <a href="#" class="muted">Privacy</a>
         <a href="#" class="muted">Terms</a>

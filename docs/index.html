@@ -171,6 +171,28 @@ body{
   transform: scale(1.05);
   filter: brightness(1.1);
   transition: transform 0.4s ease, filter 0.4s ease;
+  
+  /* Pop-up movement for cards and lookbook */
+.product-grid li,
+.lb-grid .title {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-grid li:hover,
+.lb-grid .title:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+}
+
+.product-grid li img,
+.lb-grid .title img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.product-grid li:hover img,
+.lb-grid .title:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.1);
 }
 
 /* Reset smooth transition for default state */
@@ -347,7 +369,7 @@ body{
   <main>
     <!-- Hero -->
     <section class="hero">
-      <div class="container hero-inner">
+      <div class="container hero-inner reveal">
         <div>
           <h1>Minimal silhouettes, <span class="accent">bold intention</span>.</h1>
           <p>Streetwear essentials in sand, black, and gold. Built for everyday movement. Limited drops only.</p>
@@ -368,8 +390,8 @@ body{
     </section>
 
     <!-- Featured / Shop -->
-    <section class="grid" id="shop" aria-labelledby="shop-heading">
-      <div class="container">
+   <section class="grid" id="shop" aria-labelledby="shop-heading">
+  <div class="container reveal">
         <div class="section-head">
           <h2 id="shop-heading">Featured</h2>
           <p class="sub">Everyday pieces in our sand/white palette.</p>
@@ -399,7 +421,7 @@ body{
 
     <!-- Lookbook -->
     <section class="lookbook" id="lookbook" aria-labelledby="lb-heading">
-      <div class="container">
+  <div class="container reveal">
         <div class="section-head">
           <h2 id="lb-heading">Lookbook</h2>
           <p class="sub">Season 01 — “Signal”</p>
@@ -847,6 +869,18 @@ const catalog = [
   // Initial
   renderCart();
 })();
+// Scroll reveal animation
+const reveals = document.querySelectorAll('.reveal');
+const revealOnScroll = () => {
+  reveals.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add('active');
+    }
+  });
+};
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
 </script>
 </body>
 </html>
